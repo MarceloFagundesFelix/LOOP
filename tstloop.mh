@@ -1,0 +1,11 @@
+nat x y
+
+in x
+y = 5
+
+loop x
+   loop y
+      x++
+      out x
+   end
+end
