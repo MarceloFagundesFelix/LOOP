@@ -1,0 +1,87 @@
+abbr INV x
+   nat t
+   t = 1
+   loop x
+      t = 0
+   end
+   ret t
+
+abbr MENORIG x y
+   nat d
+   d = x
+   d -= y
+   d = INV d
+   ret d
+
+abbr MOD x y
+   nat T
+   loop x
+      T = MENORIG y x
+      loop T
+         x -= y
+      end
+   end
+   ret x
+
+abbr DIV x y
+   nat q T
+   q = 0
+   loop x
+      T = MENORIG y x
+      loop T
+         x -= y
+         q++
+      end
+   end
+   ret q
+
+abbr AND x y
+  nat t
+  t = 0
+  loop x
+     loop y
+        t = 1
+     end
+  end
+  ret t
+
+abbr EQUAL x y
+  nat t1 t2 t
+  t1 = MENORIG x y
+  t2 = MENORIG y x
+  t  = AND t1 t2
+  ret t
+
+abbr DIF x y
+  nat t
+  t = EQUAL x y
+  t = INV t
+  ret t
+
+main
+   nat num den div r1 r2 t xnum
+
+   in num
+   in den
+
+   xnum = num
+   div = 2
+   repete:
+      r1 = MOD num div
+      r2 = MOD den div
+      r1 = INV r1
+      r2 = INV r2
+      t  = AND r1 r2
+      loop t
+         num /= div
+         den /= div
+         goto repete
+      end
+      div++
+      t = MENORIG div num
+      loop t 
+         goto repete // com outro div
+      end
+   
+   out num
+   out den

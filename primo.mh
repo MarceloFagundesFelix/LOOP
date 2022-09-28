@@ -1,0 +1,83 @@
+// P = primo? x
+
+nat P x div n Resto RestoX
+nat r1 a1 b1 // parametros formais de mod
+nat xx
+
+in x // quero saber se x dado eh primo
+
+P = 1
+div = 2
+n = x
+n -= 2
+
+xx = x
+xx--
+
+loop xx
+   goto inicio  
+end
+P = 0
+goto fimprimo
+
+inicio:
+LOOP n
+
+   // Resto = x % div
+   a1 = x
+   b1 = div
+   goto mod     // substituir por call mod que eh um desvio para mod junto com um emplihamento do endereço atual+1
+// nesse call podemos ter os parms reais tipo:    call mod x div com ret Resto (Resto esta definida no corpo da abbr mod)
+   retmod: Resto = r1
+
+   // abbr Resto = INV Resto
+   //resto1 = Resto
+   //goto inv
+   //retinv: Resto = resto1
+   RestoX = 1
+   loop Resto
+      RestoX = 0 
+   end
+   Resto = RestoX
+
+   LOOP Resto
+      P = 0
+      goto fimprimo
+   END
+
+   div++
+
+END
+
+goto fimprimo
+
+mod:  // abbr r1 = mod a1 b1
+nat d1 m1 m11 // locais de mod
+LOOP a1
+   d1 = b1
+   d1 -= a1
+   m1 = 1
+   loop d1 // se tem dif entao b1 > a1
+      m1 = 0
+   end
+   
+   loop m1 // se b1 <= a1
+      a1 -= b1
+   end
+
+   m11 = 1 // m1 = INV m11
+   loop m1
+      m11 = 0
+   end
+   m1 = m11
+   
+   loop m1
+      goto fimmod
+   end
+end
+fimmod: r1 = a1
+goto retmod      // ret (pega o endereço de retorno da pilha de retornos do ambiente de execução da Maquina Virtual)
+
+fimprimo: out P
+ 
+

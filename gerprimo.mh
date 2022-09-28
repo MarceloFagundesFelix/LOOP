@@ -1,0 +1,120 @@
+abbr INV x
+   nat t
+   t = 1
+   loop x
+      t = 0
+   end
+   ret t
+
+abbr MENORIG x y
+   nat d
+   d = x
+   d -= y
+   d = INV d
+   ret d
+
+abbr MOD x y
+   nat T
+   loop x
+      T = MENORIG y x
+      loop T
+         x -= y
+      end
+   end
+   ret x
+
+abbr DIV x y
+   nat q T
+   q = 0
+   loop x
+      T = MENORIG y x
+      loop T
+         x -= y
+         q++
+      end
+   end
+   ret q
+
+abbr AND x y
+  nat t
+  t = 0
+  loop x
+     loop y
+        t = 1
+     end
+  end
+  ret t
+
+abbr OR x y
+  nat t
+  t = 0
+  loop x
+     t = 1
+  end
+  loop y
+     t = 1
+  end
+  ret t  
+
+abbr EQUAL x y
+  nat t1 t2 t
+  t1 = MENORIG x y
+  t2 = MENORIG y x
+  t  = AND t1 t2
+  ret t
+
+abbr DIF x y
+  nat t
+  t = EQUAL x y
+  t = INV t
+  ret t
+
+abbr EhPrimo n
+  nat um zero t1 t2 t3 t r div n1 dois
+  zero = 0
+  um   = 1
+  dois = 2
+  t1 = EQUAL n um
+  t2 = EQUAL n zero
+  t3 = EQUAL n dois
+  t = OR t1 t2
+  loop t
+     ret zero
+  end
+  loop t3
+     ret um
+  end
+  div = dois
+  n1 = n
+  n1 /= dois
+  loop n1
+     r = MOD n div
+     t = EQUAL r zero
+     loop t
+        ret zero
+     end
+     div++
+  end
+  ret um
+
+abbr GerPrxPrimo n
+  nat t
+  n++
+  enq: t = EhPrimo n
+     t = INV t
+     loop t
+        n++
+        goto enq
+     end
+  ret n
+
+main
+   nat N p
+   p = 0
+   in N // quantos primos quer gerar?
+   loop N
+      p = GerPrxPrimo p
+      out p
+   end
+   
+

@@ -1,0 +1,15 @@
+nat x
+
+// na versao 1.01 estava aceitando
+// nao gerava o JMPZ com endereco para // deposi do end pq nao achava end
+// executava apenas o loop-end mais interno
+
+
+in x
+
+loop x
+   loop x
+      x++
+   end
+
+out x

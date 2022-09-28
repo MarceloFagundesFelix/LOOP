@@ -1,0 +1,17 @@
+abbr fat x
+nat F n
+F = 1
+n = 1
+LOOP x
+   F *= n
+   n++
+END
+RET F
+
+MAIN
+nat a b
+
+in a
+b = fat a
+out b
+

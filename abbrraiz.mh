@@ -1,0 +1,54 @@
+// abreviaturas de apoio
+nat k w j
+// retorna o inverso logico de x
+abbr INV x
+  nat t
+  t = 1
+  loop x
+     t = 0
+  end
+  ret t
+
+// retorna 1 se x <= y e 0 senao
+abbr MENORIG x y
+  nat d
+  d = x
+  d -= y
+  d = INV d
+  ret d
+
+// algoritmo para calculo da raiz de m
+// raiz = 0
+// i = 1
+// while (m >= i){
+//    m = m - i;
+//    i = i + 2;
+//    raiz = raiz + 1;
+// }
+
+// retorna a raiz quadrada de m
+abbr SQRT m
+  nat raiz i T
+  raiz = 0
+  i = 1
+
+  volta   : T = MENORIG i m
+  loop T
+     m -= i         
+     i += 2
+     raiz++
+     goto volta
+  end
+  ret raiz
+
+// Principal que calcula algumas raizes
+main
+  nat a
+  get: in a
+  loop a
+     a = SQRT a
+     out a
+     goto get
+  end
+
+

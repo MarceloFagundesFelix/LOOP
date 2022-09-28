@@ -1,0 +1,16 @@
+// Pede x ao usuario e calcula x!
+nat F n x
+
+in x
+
+F = 1
+n = 1
+
+LOOP x
+   F *= n
+   n++
+   //out F
+END
+
+out F
+

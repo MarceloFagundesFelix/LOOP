@@ -1,0 +1,21 @@
+abbr PAR x
+   nat q dois d
+   dois = 2
+   q = x
+   q /= dois
+   q *= dois
+   d = x
+   d -= q
+   loop d
+      d = 0
+      ret d
+   end
+   d = 1
+   ret d
+
+main
+   nat a
+   in a
+   a = PAR a
+   out a
+ 

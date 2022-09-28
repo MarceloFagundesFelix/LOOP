@@ -1,0 +1,76 @@
+// gerador de primos modularizado
+//-----------------------------------------------
+abbr INV x	// retorna o inverso de x
+  nat t
+  t = 1
+  loop x
+     t = 0
+  end
+  ret t
+//-----------------------------------------------
+abbr MENORIG x y	// retorna 1 se x <= y
+  nat d
+  d = x
+  d -= y
+  d = INV d
+  ret d
+//-----------------------------------------------
+abbr MOD a b	// retorna o resto de a div b
+  nat m
+  LOOP a
+     m = MENORIG b a
+     loop m 		// se b <= a
+        a -= b
+     end
+     m = INV m
+     loop m
+        goto fimmod
+     end
+  end
+  fimmod: ret a
+
+//-----------------------------------------------
+abbr DIVISIVEL a b
+  nat Resto  
+  Resto = MOD a b
+  Resto = INV Resto
+  ret Resto
+
+//-----------------------------------------------
+abbr PRIMO x	// retorna 1 se x eh primo
+  nat n d div EhPrimo // Resto RestoZero 
+
+  n = x
+  n /= 2
+  div = 2
+  EhPrimo = 1
+  LOOP n
+     //Resto = MOD x div
+     //RestoZero = INV Resto
+     //LOOP RestoZero
+     d = DIVISIVEL x div
+     loop d
+        EhPrimo = 0
+        goto fimprimo
+     end
+     div++
+  END
+  fimprimo: ret EhPrimo
+//-----------------------------------------------
+main	// gerador de numeros primos
+	// estratégia de gerar x e testar
+
+nat x P numprimos
+
+in numprimos	// num de primos a gerar
+
+x = 2
+volta: loop numprimos
+   P = PRIMO x		// testa se x eh primo
+   loop P		// retornando 1, era
+      out x
+      numprimos--	// contabiliza quantos ainda faltam gerar
+   end
+   x++			// proximo numero a testar
+   goto volta
+end

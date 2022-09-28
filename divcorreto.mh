@@ -1,0 +1,53 @@
+nat a b quoc resto t d v behzero
+
+in a
+in b
+
+behzero = 1
+loop b
+   behzero = 0
+end
+
+loop behzero
+   goto fimsemquoc
+end
+
+resto = a  // inicia resto com o dividendo e vai tirando b
+quoc = 0
+loop a
+   d = b
+   loop resto   // d = b - resto
+      v = 0
+      loop d
+         d = v
+         v++
+      end
+   end
+
+   t = 1   // t = b <= resto
+   loop d
+      t = 0
+   end
+
+   loop t 
+      
+      loop b   // resto -= b
+         v = 0
+         loop resto
+            resto = v
+            v++
+         end
+      end
+      quoc++
+   end
+end
+
+goto fimcomquoc
+
+fimsemquoc: out behzero 
+goto fim
+
+fimcomquoc: out quoc
+out resto
+
+fim:

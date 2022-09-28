@@ -1,0 +1,78 @@
+nat max a b m1 m2 d1 d2 d v t t1 t2 q mmc
+
+in a
+in b
+
+max = 0
+loop a
+   loop b
+      max++
+   end
+end
+
+m1 = a
+m2 = b
+
+loop max   // repete a*b vezes
+
+   // calcula em t se m1 != m2
+    
+   d1 = m1   // d1 = m1 - m2
+   d1 -= m2
+
+   d2 = m2   // d2 = m2 - m1
+   d2 -= m1
+
+   t = 0
+   loop d1
+      t = 1
+   end
+   loop d2
+      t = 1
+   end
+
+   // se m1 != m2 faca
+   loop t
+      
+      // t1 = m1 < m2
+      d = m1   // d = m1 - m2
+      d -= m2
+
+      t1 = 1
+      loop d
+         t1 = 0
+      end
+      
+      loop t1   // se m1 < m2
+         m1 += a
+         goto prox
+      end
+
+      // t2 = m2 < m1 
+      d = m2   // d = m2 - m1
+      d -= m1
+
+      t2 = 1
+      loop d
+         t2 = 0
+      end      
+
+      loop t2   // se m2 < m1
+         m2 += b
+         goto prox
+      end
+   end
+
+   q = 1   // q = INV t
+   loop t
+      q = 0
+   end
+   loop q
+      goto fim
+   end
+
+prox: end
+
+fim: mmc = m1
+out mmc
+

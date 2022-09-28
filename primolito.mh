@@ -1,0 +1,67 @@
+// P = primo? x
+
+nat P x div n Resto RestoZero
+nat r1 a1
+nat xx
+
+in x // quero saber se x dado eh primo
+
+P = 1
+div = 2
+n = x
+n -= 2
+
+xx = x
+xx--
+
+loop xx
+   goto inicio  
+end
+P = 0
+goto fimprimo
+
+inicio:
+LOOP n
+
+   // Resto = x % div
+   a1 = x
+   nat d1 m1 m11 // locais de mod
+   LOOP a1
+      d1 = div
+      d1 -= a1
+      m1 = 1
+      loop d1 // se tem dif entao div > a1
+         m1 = 0
+      end
+   
+      loop m1 // se div <= a1
+         a1 -= div
+      end
+
+      m11 = 1 // m1 = INV m11
+      loop m1
+         m11 = 0
+      end
+      m1 = m11
+   
+      loop m1
+         goto fimmod
+      end
+   end
+   fimmod: Resto = a1
+
+   RestoZero = 1     // RestoZero = INV Resto
+   loop Resto
+      RestoZero = 0 
+   end
+
+   LOOP RestoZero  // se resto foi zero x nao primo
+      P = 0
+      goto fimprimo
+   END
+
+   div++
+
+END
+
+fimprimo: out P

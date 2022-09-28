@@ -1,0 +1,31 @@
+// raiz = 0
+// i = 1
+// while (m >= i){
+//    m = m – i;
+//    i = i + 2;
+//    raiz = raiz + 1;
+// }
+
+nat raiz i m T d
+in m
+raiz = 0
+i = 1
+
+volta:
+//T = i <= m
+d = i
+d -= m
+T = 1   
+loop d
+   T = 0
+end
+
+loop T
+   m -= i
+   i += 2
+   raiz++
+   out m
+   goto volta
+end
+
+out raiz

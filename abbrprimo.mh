@@ -1,0 +1,64 @@
+// Imprime 1 ou 0 caso x dado seja ou nao primo
+
+abbr INV x
+  nat t
+  t = 1
+  loop x
+     t = 0
+  end
+  ret t
+
+abbr MENORIG x y
+  nat d
+  d = x
+  d -= y
+  d = INV d
+  ret d
+
+abbr MOD a b
+  nat m
+  LOOP a
+     m = MENORIG b a
+     loop m // se b <= a
+        a -= b
+     end
+     m = INV m
+     loop m
+        goto fimmod
+     end
+  end
+  fimmod: ret a
+
+abbr PRIMO x
+  nat n div Resto RestoZero P
+
+  n = x
+  n -= 2
+  div = 2
+  P = 1
+  LOOP n
+     Resto = MOD x div
+     RestoZero = INV Resto
+     LOOP RestoZero
+        P = 0
+        goto fimprimo
+     END
+     div++
+  END
+  fimprimo: ret P
+
+main
+  nat x P div maiorQue1
+
+  in x // quero saber se x dado eh primo
+
+  div = 2
+  maiorQue1 = x
+  maiorQue1--
+  P=0
+  loop maiorQue1
+     P = PRIMO x
+     goto fimmain 
+  end
+  
+  fimmain: out P

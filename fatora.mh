@@ -1,0 +1,66 @@
+// Fatoracao // Decomposicao em fatores primos //
+// Mostra os fatores primos de um numero "A":
+
+abbr MENORIGUAL A B
+   nat a
+   a = 1
+   A -= B
+   loop A
+      a = 0
+   end
+   ret a
+
+abbr EQ x y
+   nat t1 t2 um zero
+   um = 1
+   zero = 0
+   t1 = MENORIGUAL x y
+   t2 = MENORIGUAL y x
+   loop t1
+        loop t2
+             ret um
+        end
+   end
+   ret zero
+
+abbr RESTO A B
+   nat b c
+   b = A
+   loop A
+      c = MENORIGUAL B b
+      loop c
+         b -= B
+      end
+   end
+   ret b
+
+abbr DIVISIVEL A B
+   nat d e
+   d = 1
+   e = RESTO A B
+   loop e
+      d = 0
+   end
+   ret d
+
+main
+   nat A B C Fator RestauraA T
+   in A
+   RestauraA = 1
+   B = A
+   Fator = 2
+   loop A
+      s: C = DIVISIVEL B Fator
+      loop C
+         B /= Fator
+         RestauraA *= Fator
+         out Fator
+         T = EQ A RestauraA
+         loop T
+              goto fim
+         end
+         goto s
+      end
+      Fator++
+   end
+   fim:

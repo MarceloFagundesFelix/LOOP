@@ -1,0 +1,27 @@
+nat g
+
+g = 10 // nao funciona ????
+
+// usa e muda a g mas a retorna intacta
+abbr MUDAG q // 1 parm eh obrigatorio
+   nat antes
+   antes = g
+   g+=2
+   algum: out g // rotulo entre escopos!!!
+// erro sintatico!!!!  
+   ret antes
+
+abbr DOBRAG q
+   g = MUDAG g 
+   g *= 2
+   ret g
+
+// forma de uma abbr "ret" mais de 1 valor
+// manipulando globais
+main
+   nat x
+   in g
+   x = DOBRAG x // x aqui eh dummy ...
+   out x
+   goto algum // caberia aqui um warnning
+   out g

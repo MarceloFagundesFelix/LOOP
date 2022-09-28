@@ -1,0 +1,24 @@
+nat g
+
+g = 10 // nao funciona ????
+
+abbr MUDAG q // 1 parm eh obrigatorio
+   nat antes
+   antes = g
+   g+=2   
+   ret antes
+
+abbr DOBRAG q
+   nat antes   
+   antes = g
+   g*=2
+   ret antes
+
+// forma de uma abbr "ret" mais de 1 valor
+// manipulando globais
+main
+   nat x
+   in g
+   x = MUDAG x // x aqui eh dummy ...
+   out x
+   out g

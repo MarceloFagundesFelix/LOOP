@@ -1,0 +1,98 @@
+// converte de binario para decimal
+
+abbr POW x y
+   nat p
+   p = 1
+   loop y
+      p *= x
+   end
+   ret p 
+
+abbr INV x
+   nat t
+   t = 1
+   loop x
+      t = 0
+      goto fim1
+   end
+   fim1: ret t
+
+abbr MENORIG a b
+   nat d
+   d = a
+   d -= b
+   d = INV d
+   ret d
+
+abbr MAIOR x y
+   nat d t
+   d = x
+   d -= y
+   t = 0
+   loop d
+      t = 1
+      goto fim2
+   end
+   fim2: ret t   
+
+// criar operador %=
+// a = MOD a b  equivTo  a %= b
+abbr MOD x y
+   nat T
+   loop x
+      T = MENORIG y x
+      loop T
+         x -= y
+      end
+      T = INV T
+      loop T
+         goto fimdiv
+      end
+   end
+   fimdiv: ret x
+
+abbr DIV x y
+   nat q T
+   q = 0
+   loop x
+      T = MENORIG y x
+      loop T
+         x -= y
+         q++
+      end
+      T = INV T
+      loop T
+         goto fimdiv1
+      end
+   end
+   fimdiv1: ret q
+
+main
+  nat n x soma exp dez dois zero 
+  nat q q1 r pot parc t
+  in n
+  x = n
+  soma = 0
+  exp = 0
+  dez = 10
+  dois = 2
+  zero = 0
+  
+//  volta: t = MAIOR x zero
+//     loop t
+
+  volta: loop x 
+        r = MOD x dez
+        //pot = POW dois exp
+        pot = 2
+        pot ^= exp
+        parc = r
+        parc *= pot
+        soma += parc
+        exp++
+        //x = DIV x dez
+        x /= dez
+        out x
+        goto volta
+     end
+  out soma

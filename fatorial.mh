@@ -1,0 +1,18 @@
+nat F n x
+
+in x
+
+F = 1
+n = 0
+
+LOOP x
+   LOOP F
+      LOOP n
+         F++
+      END
+   END
+   n++
+   //out F
+END
+out F
+

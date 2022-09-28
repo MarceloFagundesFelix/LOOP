@@ -1,0 +1,19 @@
+abbr pow x y
+nat m
+   m = 1
+   loop y
+      m *= x
+   end
+   ret m
+
+main
+nat a b r
+   
+   in a
+   in b
+   r = pow a b
+   out r
+
+   r = a
+   r ^= b
+   out r

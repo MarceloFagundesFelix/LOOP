@@ -7,10 +7,9 @@ abbr AND x y
    loop x
       loop y
          t = 1
-         goto fimand
       end
    end
-fimand: ret t
+ret t
 
 abbr INV x
    nat t
@@ -57,8 +56,7 @@ abbr SOMADIVPR x
    S = 0
    div = 1
    x1 = x
-   //x1-- // desconsiderar o x como divisor
-   x1/=2
+   x1-- // desconsiderar o x como divisor
    loop x1   
       T = Divisivel x div
       loop T
@@ -77,7 +75,7 @@ abbr EhPERF n
 ret T
  
 main
-   nat lim a T
+   nat lim a S T
    in lim
    a = 1
    loop lim
