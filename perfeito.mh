@@ -1,0 +1,89 @@
+// lista os numeros perfeitos ate um limite
+// dado pelo usuario
+
+abbr AND x y
+   nat t
+   t = 0
+   loop x
+      loop y
+         t = 1
+         goto fimand
+      end
+   end
+fimand: ret t
+
+abbr INV x
+   nat t
+   t = 1
+   loop x
+      t = 0
+      goto fim1
+   end
+fim1: ret t
+
+abbr MENORIG a b
+   nat d
+   d = a
+   d -= b
+   d = INV d
+ret d
+
+
+abbr EQUAL x y
+   nat t1 t2 t
+   t1 = MENORIG x y
+   t2 = MENORIG y x
+   t  = AND t1 t2
+ret t
+
+abbr MOD x y
+   nat T
+   loop x
+      T = MENORIG y x
+      loop T
+         x -= y
+      end
+   end
+ret x
+
+abbr Divisivel x y
+   nat t
+   t = MOD x y
+   t = INV t
+ret t 
+
+abbr SOMADIVPR x
+   nat S div T x1
+   S = 0
+   div = 1
+   x1 = x
+   //x1-- // desconsiderar o x como divisor
+   x1/=2
+   loop x1   
+      T = Divisivel x div
+      loop T
+         S += div
+         //out div
+      end
+      div++
+   end
+ret S 
+
+abbr EhPERF n
+   nat S T
+   //out n
+   S = SOMADIVPR n
+   T = EQUAL S n
+ret T
+ 
+main
+   nat lim a T
+   in lim
+   a = 1
+   loop lim
+      T = EhPERF a
+      loop T
+         out a
+      end
+      a++
+   end

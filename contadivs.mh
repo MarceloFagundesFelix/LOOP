@@ -1,0 +1,108 @@
+// Pede N e exibe seus divisores
+// e o numero de divisores de N
+
+abbr INV x
+   nat t
+   t = 1
+   loop x
+      t = 0
+   end
+   ret t
+
+abbr MENORIG x y
+   nat d
+   d = x
+   d -= y
+   d = INV d
+   ret d
+
+abbr MOD x y
+   nat T
+   loop x
+      T = MENORIG y x
+      loop T
+         x -= y
+      end
+   end
+   ret x
+
+abbr DIV x y
+   nat q T
+   q = 0
+   loop x
+      T = MENORIG y x
+      loop T
+         x -= y
+         q++
+      end
+   end
+   ret q
+
+abbr AND x y
+  nat t
+  t = 0
+  loop x
+     loop y
+        t = 1
+     end
+  end
+  ret t
+
+abbr OR x y
+  nat t
+  t = 0
+  loop x
+     t = 1
+  end
+  loop y
+     t = 1
+  end
+  ret t  
+
+abbr EQUAL x y
+  nat t1 t2 t
+  t1 = MENORIG x y
+  t2 = MENORIG y x
+  t  = AND t1 t2
+  ret t
+
+abbr DIF x y
+  nat t
+  t = EQUAL x y
+  t = INV t
+  ret t
+
+abbr NumDivs x
+  nat n div t
+  
+  div = 1
+  n   = 0
+  loop x
+     t = MOD x div
+     t = INV t
+     loop t // se deu resto 0
+        out div
+        n++
+     end
+     div++
+  end
+  ret n  
+
+abbr BOOL a
+  nat t
+  t = 0
+  loop a
+     t = 1
+     goto fim
+  end
+  fim: ret t
+
+main
+   nat N N1 num
+   in N
+   N1 = BOOL N
+   loop N1
+      num = NumDivs N
+   end
+   out num
+

@@ -1,0 +1,83 @@
+// Testa conjectura de goldbach
+
+abbr MENORIGUAL A B
+   nat a
+   a = 1
+   A -= B
+   loop A
+      a = 0
+   end
+   ret a
+
+abbr RESTO A B
+   nat b c
+   b = A
+   loop A
+      c = MENORIGUAL B b
+      loop c
+         b -= B
+      end
+   end
+   ret b
+
+abbr DIVIS A B
+   nat d e
+   d = 1
+   e = RESTO A B
+   loop e
+      d = 0
+   end
+   ret d
+
+abbr ehPrimo x
+   nat d r X ehDivisivel
+   d = 2
+   X = x
+   X-=2
+   loop X
+      ehDivisivel = DIVIS x d
+      loop ehDivisivel // se x eh divisivel entao nao eh primo
+         r = 0
+         ret r
+      end
+      d++
+   end 
+   r = 1 // se nenhum d dividiu x eh porque ele eh primo
+   ret r
+
+abbr proxPrimo x
+   nat prox t
+   prox = x 
+   prox++
+   v: t = ehPrimo prox
+   loop t
+      ret prox
+   end
+   prox++
+   goto v
+
+// Testa conjectura de Goldbach para n buscando
+// uma decomposicao de n em soma de 2 primos
+abbr GOLD n
+   nat P Q t
+   P = 2 // comeca P com o 1o primo
+   g: Q = n
+   Q -= P
+   t = ehPrimo Q
+   loop t // se P e Q sao primos achamos a decomposicao de n
+      out n
+      out P
+      out Q
+      ret n
+   end
+   P = proxPrimo P // obtem o proximo primo depois do P atual
+   goto g
+
+main
+   nat LIM n z
+   in LIM
+   n = 4
+   loop LIM
+      z = GOLD n
+      n+=2
+   end
