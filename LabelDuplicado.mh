@@ -1,0 +1,125 @@
+// =============================
+//  copiar y
+// =============================
+abbr copy y
+   ret y
+
+// =============================
+//  incrementar x com y unidades
+// ============================= 
+abbr inc x y
+   loop y
+      x++
+   end
+   ret x
+// =============================
+
+// =============================
+//  retornar a soma de x com y 
+// =============================
+abbr sum x y
+nat z
+   z = 0
+   loop x
+      z++
+   end
+   loop y
+      z++
+   end
+   ret z 
+
+// =============================
+//  retorna o produto de x e y
+// =============================
+abbr mul x y
+   nat z
+   loop x
+      loop y
+         z++
+      end
+   end
+   ret z
+
+// =============================
+//  decrementa x (x--;)
+// =============================
+
+abbr dec x
+   nat u v
+   u = 0
+   v = 0
+   loop x
+      v = u // antes de incr u salva em v
+      u++
+   end
+   ret v
+
+// =============================
+//  retorna o decremento b de a 
+// =============================
+abbr sub a b    // a -= b;
+   loop b
+      a = dec a
+   end
+   ret a
+
+// =============================
+//  retorna a divisao de a por b 
+// =============================
+abbr div a b  //( div 7 2 = 3 )   
+   nat q x
+   q = 0
+   loop a
+      x = b
+      x -= a
+      loop x
+         goto fim
+      end
+      a -= b
+      q++
+   end
+   fim: ret q 
+
+// =============================
+//  retorna resto da div a por b 
+// =============================
+abbr mod a b  //( mod 7 2 = 1 )   
+   nat x
+   loop a
+      x = b
+      x -= a
+      loop x
+         goto fimm
+      end
+      a -= b
+   end
+   //fim: ret a --erro de label duplicado
+   fimm: ret a
+
+// =============================
+//  retorna fatorial de n 
+// =============================
+abbr fat n
+   nat f 
+   f = 1
+   loop n
+      f *= n
+      n--
+   end     
+   ret f
+
+// =============================
+//  PROGRAMA PRINCIPAL
+// =============================
+main
+   nat a b c
+
+   in a
+   in b
+   c = div a b
+   out c
+   c = mod a b
+   out c
+   in a
+   c = fat a
+   out c
