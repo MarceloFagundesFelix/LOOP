@@ -1,14 +1,20 @@
 /*************************************************************************************
-   Arquivo:    "MHShellv2_3a.c" (Versao 2.3 Expande com comandos if e while)
+   Arquivo:    "MHShellv2_3b.c" (Versao 2.3 Expande com comandos if e while)
    Descricao:  main do shell, Funcoes, Tipos e Variaveis Globais
                implementa abreviatura na MHplus
    Autor:      Marcelo Fagundes Felix
    Data:       04/06/2019
 **************************************************************************************/
 
+
+ATENÃ‡ÃƒO!!!!!!!!!!
+
+VERSÃƒO DE CONTROLE - NÃƒO DEVE SER ALTERADA.
+USE APENAS PARA FINS DE COMPARAÃ‡ÃƒO 
+
 /*************************************************************************************
 
---- Alterações e acrescimos:
+--- AlteraÃ§Ãµes e acrescimos:
 1. tron/trof
 2. var = var
 3. instrucao 7 (ci) STOV
@@ -27,7 +33,7 @@ mh    OUT var     instrucao   11 ci OUT v
 10. modificacao de comandos do shell (dspvar -> vars, dspmh -> mh, dspci -> ci e lang)
 
 11. acrescimo de mais informacoes de debug no interpretador (nos "if (tron)") 18.abril
-12. acrescimo dos tokens -- e -= com respectivas instruções MHplus
+12. acrescimo dos tokens -- e -= com respectivas instruÃ§Ãµes MHplus
 
 13. Suporte as Abreviaturas: ABBR RET e MAIN:
 a. nocoes de escopo global, local (abbr e main) e lista de parametros formais
@@ -76,14 +82,14 @@ Mas parece gerar codigo normalmente. PENDENTE
 
 12. Acrescentando os tokens *= /= e ^= mais op-rel nao contraidos
 
-13. instrucoes ci MULC e MULV com respectiva geracao de código em transMH2CI e
+13. instrucoes ci MULC e MULV com respectiva geracao de cÃ³digo em transMH2CI e
 maquina virtual MH (interpretador de CI)
 
 14. ERRO detectado!!! LOOP sem END fechando: gerou codigo onde o JMPZ ficou sem endereco
 de escape do LOOP. Executou normalmente o bloco (e ate loops internos)
 CORRECAO: detectar !pilhaLAVazia() ==> "end expected"
 
-15. NECESSIDADE DE APAGAR o ci gerado quando qq erro sintatico é produzido!!!!!!!!!
+15. NECESSIDADE DE APAGAR o ci gerado quando qq erro sintatico Ã© produzido!!!!!!!!!
 RESOLVIDO!!!
 
 --- Bugs, observacoes e correcoes: MHplus com abreviaturas
@@ -151,7 +157,7 @@ Tvar VAR[50];  // Tabela para 50 variaveis com valor e nome da var
 
 Trot ROT[50];  // Tabela p/ 50 rotulos simbolicos
                // Rotulos sao identificacoes simbolicas para enderecos reais do ci
-               // Ou seja, se um comando ci ocorre no endereco E do código intermed.,
+               // Ou seja, se um comando ci ocorre no endereco E do cÃ³digo intermed.,
                // nao precisamos nos referir ao valor numerico E quando usarmos GOTO.
                // Usamos um simbolo para isso.
                // Exemplo: Seja E o endereco 99 do ci. Chamando 99 de "label" podemos
@@ -172,15 +178,15 @@ int ulab;   // indica o topo da Pilha de Loops Abertos
 
 typedef struct
 {
-   int end; // guarda o endereço de retorno do JMP do END para o JMPZ do LOOP aberto
-   int reg; // guarda o endereço do registrador de controle do LOOP aberto
+   int end; // guarda o endereÃ§o de retorno do JMP do END para o JMPZ do LOOP aberto
+   int reg; // guarda o endereÃ§o do registrador de controle do LOOP aberto
 } TLoopAberto;
 
-TLoopAberto LA[100]; // Pilha de LOOPS abertos (máximo de 100 LOOPs por programa MH)
+TLoopAberto LA[100]; // Pilha de LOOPS abertos (mÃ¡ximo de 100 LOOPs por programa MH)
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Dados para Maquina Virtual MHPlus (extensao de MH pura)
-// Estruturas de Dados para suporte à abreviaturas (ABBR)
+// Estruturas de Dados para suporte Ã  abreviaturas (ABBR)
 // Extensao de MHplus q permite chamar abreviaturas (sem recursao direta ou indireta)
 //////////////////////////////////////////////////////////////////////////////////////
 
@@ -200,7 +206,7 @@ int uERet;     // topo da pilha de Enderecos de Retorno (das chamadas de abbr)
 typedef struct
 {
    char nome[12]; // id-var da abreviatura
-   int ei;        // endereco de inicio do código da abbr
+   int ei;        // endereco de inicio do cÃ³digo da abbr
    int ef;        // endereco de final do codigo da abbr
    int parmF[16]; // lista com os enderecos em VAR dos parametros formais da abbr
                   // parmF[0] indica o numero de parametros na lista
@@ -296,7 +302,7 @@ o rotulo simboliza, pois a instrucao GOTO ja foi C U I D A D O !!!!!! REVER.....
 - Rotulos nao podem rotular mais de uma linha (senao haveria nao-determinismo) pq
 GOTO nao pode desviar para n linhas!
 - No entanto, "GOTO rotulo" pode aparecer n vezes no codigo, desde que "rotulo"
-identifique uma única linha.
+identifique uma Ãºnica linha.
 */
 
 /*************************************************************************************
@@ -346,7 +352,7 @@ int varInstalada(char nomeV[12])
 
 /*************************************************************************************
 Procedimento para instalar variavel nomeV na tabela de variaveis VAR.
-Caso já esteja instalada, então indica Erro de redefinição.
+Caso jÃ¡ esteja instalada, entÃ£o indica Erro de redefiniÃ§Ã£o.
 OBS!!!!! Seria melhor retornar um valor 0/1 e deixar a msg de erro para o tradutor
 **************************************************************************************/
 int instalaVar(char nomeV[12])
@@ -385,7 +391,7 @@ int abbrInstalada(char nomeA[12])
 
 /*************************************************************************************
 Procedimento para instalar abreviatura nomeA na tabela de TAbb.
-Caso já esteja instalada, então indica Erro de redefinição.
+Caso jÃ¡ esteja instalada, entÃ£o indica Erro de redefiniÃ§Ã£o.
 OBS!!!!! Seria melhor retornar um valor 0/1 e deixar a msg de erro para o tradutor
 **************************************************************************************/
 int instalaAbbr(char nomeA[12])
@@ -507,7 +513,7 @@ int resolveGOTOsAbertos()
 
 /*************************************************************************************
    FUNCOES DA PILHA DE LOOPS ABERTOS que controla a traducao das estruturas LOOP-END
-   A Sintaxe Sensível ao Contexto que requer Automato de Pilha + Reg de repeticao
+   A Sintaxe SensÃ­vel ao Contexto que requer Automato de Pilha + Reg de repeticao
 
    Empilha informacoes do ultimo LOOP aberto
    => e: endereco do JMPZ de controle das repeticoes do LOOP
@@ -516,7 +522,7 @@ int resolveGOTOsAbertos()
 **************************************************************************************/
 void empilhaLA( int e, int r) // instala LOOP mais recente na pilha
 {
-   LA[++ulab].end = e;     // endereço do JMPZ do LOOP aberto
+   LA[++ulab].end = e;     // endereÃ§o do JMPZ do LOOP aberto
    LA[ulab].reg = r;       // registrador de controle de repeticoes do LOOP aberto
 }
 
@@ -544,7 +550,7 @@ int pilhaLAvazia()
 **************************************************************************************/
 void empilhaPER(int e) // instala endereco de retorno no topo da pilha
 {
-   PER[++uERet] = e;   // endereço da proxima instrucao a executar apos comando RET
+   PER[++uERet] = e;   // endereÃ§o da proxima instrucao a executar apos comando RET
 }
 
 /*************************************************************************************
@@ -789,7 +795,7 @@ Recebe a linha do fonte MH a ser traduzida
 */
 
 /*************************************************************************************
-Traduz uma linha do arquivo .mh de entrada, gerando respectivas instruções ci.
+Traduz uma linha do arquivo .mh de entrada, gerando respectivas instruÃ§Ãµes ci.
 A linha do arquivo esta previamente armazenada no vetor MH global.
 As instrucoes ci sao instaladas no vetor CI global que sera usado pelo interpretador.
 **************************************************************************************/
@@ -1827,8 +1833,8 @@ int execCI()
       if (tron)
          if (getchar() == 'x') break;  // saida em caso de loop infinito do ci
       PC++;
-      //if (loop())  perguntaUsuarioSePara(); guarda uma cadeia de PCs e checa se tem repetiçao de subcadeia
-      //sera implementada uma forma limitada de detectar repetiçao curta. Isso nao faz parte do projeto.
+      //if (loop())  perguntaUsuarioSePara(); guarda uma cadeia de PCs e checa se tem repetiÃ§ao de subcadeia
+      //sera implementada uma forma limitada de detectar repetiÃ§ao curta. Isso nao faz parte do projeto.
    }
    printf("\nEnd of process.\n");
 }
@@ -1867,7 +1873,7 @@ int getprompt()
    // tron     7
    char strcmd[40];
 
-   fflush(stdin); // esvazia o buffer da acao dos scanf´s para permitir um uso correto do gets abaixo
+   fflush(stdin); // esvazia o buffer da acao dos scanfÂ´s para permitir um uso correto do gets abaixo
    gets(strcmd);
    //puts(strcmd);
 
